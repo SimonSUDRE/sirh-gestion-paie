@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="classpath:cotisations-imposables.xml" />
+	<import resource="classpath:cotisations-non-imposables.xml" />
+	
+	<bean id="entreprise" class="dev.paie.entite.Entreprise" 
+		p:siret="80966785000022"
+		p:denomination="Dev Entreprise" 
+		p:codeNaf="6202A"
+	>
+	</bean>
+	
+	<bean id="nbHeureBase" class="java.math.BigDecimal">
+		<constructor-arg value="151.67"></constructor-arg>
+	</bean>
+	
+	<bean id="tauxBase" class="java.math.BigDecimal">
+		<constructor-arg value="11.0984"></constructor-arg>
+	</bean>
+	
+	<bean id="grade" class="dev.paie.entite.Grade"
+		p:nbHeuresBase-ref="nbHeureBase"
+		p:tauxBase-ref="tauxBase"
+	>
+	</bean>
+
+	<bean id="profilRem" class="dev.paie.entite.ProfilRemuneration">
+		<property name="cotisationsNonImposables">
+			<list value-type="dev.paie.entite.Cotisation">
+				<ref bean="ep01" />
+				<ref bean="ep02" />
+				<ref bean="ep03" />
+				<ref bean="ep04" />
+				<ref bean="ep05" />
+				<ref bean="ep06" />
+				<ref bean="ep07" />
+				<ref bean="ep12" />
+				<ref bean="ep14" />
+				<ref bean="ep19" />
+				<ref bean="ep20" />
+				<ref bean="ep21" />
+				<ref bean="ep28" />
+				<ref bean="ep37" />
+				<ref bean="epr1" />
+				<ref bean="epr2" />
+				<ref bean="e900" />
+				<ref bean="e901" />
+			</list>
+		</property>
+		<property name="cotisationsImposables">
+			<list value-type="dev.paie.entite.Cotisation">
+				<ref bean="sp01" />
+				<ref bean="sp02" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="remEmpl" class="dev.paie.entite.RemunerationEmploye"
+		p:matricule="M01"
+		p:entreprise-ref="entreprise"
+		p:grade-ref="grade"
+		p:profilRemuneration-ref="profilRem"
+	>
+	</bean>
+	
+	<bean id="primeExpec" class="java.math.BigDecimal">
+		<constructor-arg value="1000"></constructor-arg>
+	</bean>
+
+	<bean id="bulletin1" class="dev.paie.entite.BulletinSalaire"
+		p:primeExceptionnelle-ref="primeExpec" 
+		p:remunerationEmploye-ref="remEmpl"
+	>
+	</bean>
+</beans>
