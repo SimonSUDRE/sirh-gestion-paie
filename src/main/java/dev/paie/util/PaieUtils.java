@@ -6,10 +6,13 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @author ETY8
  *
  */
+@Service
 public class PaieUtils {
 	/**
 	 * Formate un nombre sous la forme xx.xx (exemple : 2.00, 1.90). L'arrondi se
