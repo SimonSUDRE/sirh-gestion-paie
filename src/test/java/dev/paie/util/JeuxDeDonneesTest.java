@@ -56,10 +56,10 @@ public class JeuxDeDonneesTest {
 	public void test_cotisationImposables() {
 		List<Cotisation> cotisationsImposables = bulletin1.getRemunerationEmploye().getProfilRemuneration()
 				.getCotisationsImposables();
-		Stream.of("SP01", "SP02")
-				.forEach(code -> assertThat(
-						cotisationsImposables.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent())
-								.isTrue());
+		Stream.of("SP01", "SP02").forEach(code -> assertThat(
+			cotisationsImposables.stream()
+				.filter(c -> c.getCode().equals(code)).findAny().isPresent())
+				.isTrue());
 	}
 
 	@Test
