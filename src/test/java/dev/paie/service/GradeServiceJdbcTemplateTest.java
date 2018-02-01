@@ -15,10 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import dev.paie.config.DataSourceMySQLConfig;
 import dev.paie.config.JeuxDeDonneesConfig;
-import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Grade;
 
-@ContextConfiguration(classes = { ServicesConfig.class, JeuxDeDonneesConfig.class, DataSourceMySQLConfig.class })
+@ContextConfiguration(classes = { GradeServiceJdbcTemplate.class, JeuxDeDonneesConfig.class, DataSourceMySQLConfig.class })
 @RunWith(SpringRunner.class)
 @Scope("test")
 public class GradeServiceJdbcTemplateTest {
@@ -63,7 +62,7 @@ public class GradeServiceJdbcTemplateTest {
 		assertThat(gradeliste1.getTauxBase().compareTo(gradeUp.getTauxBase())).isEqualTo(0);
 
 
-		// vérifier que la suppression est bien prise en compte
+		// vérifier que la suppression est bien prise en compte via la méthode lister
 		gradeService.supprimer(gradeliste1);
 		List<Grade> listeGrade = gradeService.lister();
 		assertThat(listeGrade.size() == 0).isTrue();
