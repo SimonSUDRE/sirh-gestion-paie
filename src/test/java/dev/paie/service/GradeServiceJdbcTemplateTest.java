@@ -42,7 +42,10 @@ public class GradeServiceJdbcTemplateTest {
 
 		// vérifier qu'il est possible de récupérer le nouveau grade via la méthode lister
 		Grade gradeliste0 = gradeService.lister().stream().filter(g -> g.getId() == 1).findAny().orElse(new Grade());
-		assertThat(gradeliste0).isEqualToComparingFieldByField(nouveauGrade);
+		assertThat(gradeliste0.getId()).isEqualTo(nouveauGrade.getId());
+		assertThat(gradeliste0.getCode()).isEqualTo(nouveauGrade.getCode());
+		assertThat(gradeliste0.getNbHeuresBase().compareTo(nouveauGrade.getNbHeuresBase())).isEqualTo(0);
+		assertThat(gradeliste0.getTauxBase().compareTo(nouveauGrade.getTauxBase())).isEqualTo(0);
 		
 		// modifier un grade
 		Grade gradeUp = new Grade();
@@ -54,7 +57,11 @@ public class GradeServiceJdbcTemplateTest {
 
 		// vérifier que les modifications sont bien prises en compte via la méthode lister
 		Grade gradeliste1 = gradeService.lister().stream().filter(g -> g.getId() == 1).findAny().orElse(new Grade());
-		assertThat(gradeliste1).isEqualToComparingFieldByField(gradeUp);
+		assertThat(gradeliste1.getId()).isEqualTo(gradeUp.getId());
+		assertThat(gradeliste1.getCode()).isEqualTo(gradeUp.getCode());
+		assertThat(gradeliste1.getNbHeuresBase().compareTo(gradeUp.getNbHeuresBase())).isEqualTo(0);
+		assertThat(gradeliste1.getTauxBase().compareTo(gradeUp.getTauxBase())).isEqualTo(0);
+
 
 		// vérifier que la suppression est bien prise en compte
 		gradeService.supprimer(gradeliste1);
