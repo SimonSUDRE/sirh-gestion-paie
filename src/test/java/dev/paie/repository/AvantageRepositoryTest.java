@@ -11,11 +11,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import dev.paie.config.DataSourceMySQLConfig;
 import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Avantage;
 
-@ContextConfiguration(classes = { ServicesConfig.class, DataSourceMySQLConfig.class })
+@ContextConfiguration(classes = { ServicesConfig.class })
 @RunWith(SpringRunner.class)
 @Scope("test")
 public class AvantageRepositoryTest {
