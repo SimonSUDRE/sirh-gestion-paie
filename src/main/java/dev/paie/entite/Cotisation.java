@@ -26,9 +26,7 @@ public class Cotisation {
 	
 	@Column(precision=10, scale=7)
 	private BigDecimal tauxPatronal;
-	
-	public Cotisation() { }
-	
+		
 	public String getCode() {
 		return code;
 	}

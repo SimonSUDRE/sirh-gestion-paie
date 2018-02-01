@@ -2,6 +2,7 @@ package dev.paie.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
@@ -43,26 +44,24 @@ public class CotisationServiceJpaTest {
 		
 		// vérifier qu'il est possible de récupérer la nouvelle cotisation via la méthode lister
 		Cotisation cotisationListe0 = cotisationService.lister().stream().filter(c -> c.getId() == cotisation.getId()).findAny().orElse(new Cotisation());
-		assertThat(cotisationListe0.getId()).isEqualTo(cotisation.getId());
-		assertThat(cotisationListe0.getCode()).isEqualTo(cotisation.getCode());
-		assertThat(cotisationListe0.getLibelle()).isEqualTo(cotisation.getLibelle());
-		if(cotisationListe0.getTauxPatronal() != null)
-			assertThat(cotisationListe0.getTauxPatronal().compareTo(cotisation.getTauxPatronal())).isEqualTo(0);
-		if(cotisationListe0.getTauxSalarial() != null)
-			assertThat(cotisationListe0.getTauxSalarial().compareTo(cotisation.getTauxSalarial())).isEqualTo(0);
+		assertThat(cotisationListe0).usingComparatorForType((a,b) -> {
+			if(a != null)
+				return a.compareTo(b);
+			else
+				return -1;
+		}, BigDecimal.class).isEqualToComparingFieldByField(cotisation);
  
 		// modifier une cotisation
 		cotisationService.mettreAJour(cotisationUp);
 		
 		// vérifier que les modifications sont bien prises en compte via la méthode lister
 		Cotisation cotisationListe1 = cotisationService.lister().stream().filter(c -> c.getId() == cotisationUp.getId()).findAny().orElse(new Cotisation());
-		assertThat(cotisationListe1.getId()).isEqualTo(cotisationUp.getId());
-		assertThat(cotisationListe1.getCode()).isEqualTo(cotisationUp.getCode());
-		assertThat(cotisationListe1.getLibelle()).isEqualTo(cotisationUp.getLibelle());
-		if(cotisationListe1.getTauxPatronal() != null)
-			assertThat(cotisationListe1.getTauxPatronal().compareTo(cotisationUp.getTauxPatronal())).isEqualTo(0);
-		if(cotisationListe1.getTauxSalarial() != null)
-			assertThat(cotisationListe1.getTauxSalarial().compareTo(cotisationUp.getTauxSalarial())).isEqualTo(0);
+		assertThat(cotisationListe1).usingComparatorForType((a,b) -> {
+			if(a != null)
+				return a.compareTo(b);
+			else
+				return -1;
+		}, BigDecimal.class).isEqualToComparingFieldByField(cotisationUp);
 		
 		// vérifier que la suppression est bien prise en compte via la méthode lister
 		cotisationService.supprimer(cotisation);
