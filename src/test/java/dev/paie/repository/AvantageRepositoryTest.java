@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import dev.paie.config.DataSourceMySQLConfig;
-import dev.paie.config.JeuxDeDonneesConfig;
 import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Avantage;
 
@@ -54,6 +53,14 @@ public class AvantageRepositoryTest {
 		// vérifier que les modifications sont bien prises en compte via la méthode findOne
 		Avantage avantageListe1 = avantageRepository.findOne(avantageUp.getId());
 		assertThat(avantageListe1).usingComparatorForType((a,b) -> {
+			if(a != null)
+				return a.compareTo(b);
+			else
+				return -1;
+		}, BigDecimal.class).isEqualToComparingFieldByField(avantageUp);
+		
+		Avantage avantages = avantageRepository.getByCode("code2").stream().findAny().orElse(new Avantage());
+		assertThat(avantages).usingComparatorForType((a,b) -> {
 			if(a != null)
 				return a.compareTo(b);
 			else
