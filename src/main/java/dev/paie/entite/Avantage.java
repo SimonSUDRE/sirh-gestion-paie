@@ -12,16 +12,16 @@ import javax.persistence.Id;
 public class Avantage {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
 	private String code;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
 	private String nom;
-	
-	@Column(precision=10, scale=2)
+
+	@Column(precision = 10, scale = 2)
 	private BigDecimal montant;
 
 	public String getCode() {
