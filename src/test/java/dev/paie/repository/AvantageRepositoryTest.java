@@ -33,16 +33,16 @@ public class AvantageRepositoryTest {
 		avantageRepository.save(avantage);
 		
 		// vérifier qu'il est possible de récupérer le nouvel avantage via la méthode findOne
-		Avantage avantageListe0 = avantageRepository.findOne(avantage.getId());
+		Avantage avantageListe0 = avantageRepository.getByCode(avantage.getCode()).stream().filter(a -> a.getCode().equals(avantage.getCode())).findAny().orElse(new Avantage());
 		assertThat(avantageListe0).usingComparatorForType((a,b) -> {
 			if(a != null)
 				return a.compareTo(b);
 			else
 				return -1;
-		}, BigDecimal.class).isEqualToComparingFieldByField(avantage);		
+		}, BigDecimal.class).isEqualToIgnoringGivenFields(avantage, "id");		
 		
 		Avantage avantageUp = new Avantage();
-		avantageUp.setId(1);
+		avantageUp.setId(avantageListe0.getId());
 		avantageUp.setCode("code2");
 		avantageUp.setNom("avantage2");
 		avantageUp.setMontant(new BigDecimal("300.75"));
@@ -50,21 +50,13 @@ public class AvantageRepositoryTest {
 		avantageRepository.save(avantageUp);
 		
 		// vérifier que les modifications sont bien prises en compte via la méthode findOne
-		Avantage avantageListe1 = avantageRepository.findOne(avantageUp.getId());
+		Avantage avantageListe1 = avantageRepository.getByCode(avantageUp.getCode()).stream().filter(a -> a.getCode().equals(avantageUp.getCode())).findAny().orElse(new Avantage());
 		assertThat(avantageListe1).usingComparatorForType((a,b) -> {
 			if(a != null)
 				return a.compareTo(b);
 			else
 				return -1;
-		}, BigDecimal.class).isEqualToComparingFieldByField(avantageUp);
-		
-		Avantage avantages = avantageRepository.getByCode("code2").stream().findAny().orElse(new Avantage());
-		assertThat(avantages).usingComparatorForType((a,b) -> {
-			if(a != null)
-				return a.compareTo(b);
-			else
-				return -1;
-		}, BigDecimal.class).isEqualToComparingFieldByField(avantageUp);
+		}, BigDecimal.class).isEqualToIgnoringGivenFields(avantageUp, "id");
 	}
 
 }
