@@ -44,8 +44,8 @@ public class GradeServiceJdbcTemplate implements GradeService {
 	
 	@Override
 	public void supprimer(Grade grade) {
-		String sqlDelete = "DELETE FROM Grade WHERE ID = ?";
-		jdbcTemplate.update(sqlDelete, grade.getId());
+		String sqlDelete = "DELETE FROM Grade WHERE CODE = ?";
+		jdbcTemplate.update(sqlDelete, grade.getCode());
 	}
 
 	@Override

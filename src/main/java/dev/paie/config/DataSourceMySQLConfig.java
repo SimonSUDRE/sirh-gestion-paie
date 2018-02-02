@@ -20,8 +20,7 @@ public class DataSourceMySQLConfig {
 		dataSource.setPassword("MOOkegO3ndt8sJ3iirY");
 		return dataSource;
 	}
-	
-	
+
 	public DataSource dataSourceH2() {
 		return new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)

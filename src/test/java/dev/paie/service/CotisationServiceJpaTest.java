@@ -36,35 +36,33 @@ public class CotisationServiceJpaTest {
 
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
-		cotisation.setId(1);
-		cotisationUp.setId(1);
-		
 		// sauvegarder une nouvelle cotisation
 		cotisationService.sauvegarder(cotisation);
 		
 		// vérifier qu'il est possible de récupérer la nouvelle cotisation via la méthode lister
-		Cotisation cotisationListe0 = cotisationService.lister().stream().filter(c -> c.getId() == cotisation.getId()).findAny().orElse(new Cotisation());
+		Cotisation cotisationListe0 = cotisationService.lister().stream().filter(c -> c.getCode().equals(cotisation.getCode())).findAny().orElse(new Cotisation());
 		assertThat(cotisationListe0).usingComparatorForType((a,b) -> {
 			if(a != null)
 				return a.compareTo(b);
 			else
 				return -1;
-		}, BigDecimal.class).isEqualToComparingFieldByField(cotisation);
+		}, BigDecimal.class).isEqualToIgnoringGivenFields(cotisation, "id");
  
+		cotisationUp.setId(cotisationListe0.getId());
 		// modifier une cotisation
 		cotisationService.mettreAJour(cotisationUp);
 		
 		// vérifier que les modifications sont bien prises en compte via la méthode lister
-		Cotisation cotisationListe1 = cotisationService.lister().stream().filter(c -> c.getId() == cotisationUp.getId()).findAny().orElse(new Cotisation());
+		Cotisation cotisationListe1 = cotisationService.lister().stream().filter(c -> c.getCode().equals(cotisationUp.getCode())).findAny().orElse(new Cotisation());
 		assertThat(cotisationListe1).usingComparatorForType((a,b) -> {
 			if(a != null)
 				return a.compareTo(b);
 			else
 				return -1;
-		}, BigDecimal.class).isEqualToComparingFieldByField(cotisationUp);
+		}, BigDecimal.class).isEqualToIgnoringGivenFields(cotisationUp, "id");
 		
 		// vérifier que la suppression est bien prise en compte via la méthode lister
-		cotisationService.supprimer(cotisation);
+		cotisationService.supprimer(cotisationUp);
 		List<Cotisation> listeCotisation = cotisationService.lister();
 		assertThat(listeCotisation.size() == 0).isTrue();
 	}

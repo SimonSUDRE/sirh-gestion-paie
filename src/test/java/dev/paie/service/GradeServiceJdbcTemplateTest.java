@@ -31,37 +31,36 @@ public class GradeServiceJdbcTemplateTest {
 
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
-		nouveauGrade.setId(1);
 		nouveauGrade.setCode("CODE1");
 		
 		// sauvegarder un nouveau grade
 		gradeService.sauvegarder(nouveauGrade);
 
 		// vérifier qu'il est possible de récupérer le nouveau grade via la méthode lister
-		Grade gradeliste0 = gradeService.lister().stream().filter(g -> g.getId() == 1).findAny().orElse(new Grade());
+		Grade gradeliste0 = gradeService.lister().stream().filter(g -> g.getCode().equals(nouveauGrade.getCode())).findAny().orElse(new Grade());
 		assertThat(gradeliste0).usingComparatorForType((a,b) -> {
 			if(a != null)
 				return a.compareTo(b);
 			else
 				return -1;
-		}, BigDecimal.class).isEqualToComparingFieldByField(nouveauGrade);
+		}, BigDecimal.class).isEqualToIgnoringGivenFields(nouveauGrade, "id");
 		
 		// modifier un grade
 		Grade gradeUp = new Grade();
-		gradeUp.setId(1);
+		gradeUp.setId(gradeliste0.getId());
 		gradeUp.setCode("Code2");
 		gradeUp.setNbHeuresBase(new BigDecimal("115.76"));
 		gradeUp.setTauxBase(new BigDecimal("12.9048"));
 		gradeService.mettreAJour(gradeUp);
 
 		// vérifier que les modifications sont bien prises en compte via la méthode lister
-		Grade gradeliste1 = gradeService.lister().stream().filter(g -> g.getId() == 1).findAny().orElse(new Grade());
+		Grade gradeliste1 = gradeService.lister().stream().filter(g -> g.getCode().equals(gradeUp.getCode())).findAny().orElse(new Grade());
 		assertThat(gradeliste1).usingComparatorForType((a,b) -> {
 			if(a != null)
 				return a.compareTo(b);
 			else
 				return -1;
-		}, BigDecimal.class).isEqualToComparingFieldByField(gradeUp);
+		}, BigDecimal.class).isEqualToIgnoringGivenFields(gradeUp, "id");
 
 
 		// vérifier que la suppression est bien prise en compte via la méthode lister
