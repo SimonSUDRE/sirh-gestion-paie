@@ -25,15 +25,16 @@ public class CotisationsMenu {
 	public static final Logger CONSOLE = LoggerFactory.getLogger(CotisationsMenu.class);
 	
 	public void execute() {
-		while(true) {
+		String choix = "";
+		do {
 			CONSOLE.info("\n");
 			CONSOLE.info("** Gestion des cotisations **");
 			CONSOLE.info("1. Lister des cotisations");
 			CONSOLE.info("2. Créer une cotisation");
 			CONSOLE.info("3. Supprimer une cotisation");
 			CONSOLE.info("99. Exit");
-			String choix = scanner.next();
-			if(choix.equals("1")) {
+			choix = scanner.next();
+			if(choix == "1") {
 				CONSOLE.info("Liste des cotisations : ");
 				List<Cotisation> cotisations = cotisationService.lister();
 				CONSOLE.info("\n");
@@ -41,7 +42,7 @@ public class CotisationsMenu {
 					CONSOLE.info("Cotisation "+c.getId()+" : "+c.getCode()+", "+c.getLibelle()+" - Taux Patronal : "+c.getTauxPatronal()+" - Taux Salarial : "+c.getTauxSalarial());
 				}
 			}
-			else if(choix.equals("2")) {
+			else if(choix == "2") {
 				CONSOLE.info("\n");
 				Cotisation cotisation = new Cotisation();
 				CONSOLE.info("Créer une cotisation : ");
@@ -60,7 +61,7 @@ public class CotisationsMenu {
 				CONSOLE.info("\n");
 				cotisationService.sauvegarder(cotisation);
 			}
-			else if(choix.equals("3")) {
+			else if(choix == "3") {
 				CONSOLE.info("\n");
 				CONSOLE.info("supprimer une cotisation : ");
 				CONSOLE.info("Liste des cotisations : ");
@@ -76,9 +77,6 @@ public class CotisationsMenu {
 				cotisation.setId(Integer.parseInt(choix));
 				cotisationService.supprimer(cotisation);
 			}
-			else if(choix.equals("99")) {
-				System.exit(0);
-			}
-		}
+		} while(choix == "99");
 	}
 }
