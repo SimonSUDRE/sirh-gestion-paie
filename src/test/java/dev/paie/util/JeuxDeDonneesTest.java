@@ -9,13 +9,11 @@ import java.util.stream.Stream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
 
-@Scope("test")
 public class JeuxDeDonneesTest {
 	private ClassPathXmlApplicationContext context;
 	private BulletinSalaire bulletin1;

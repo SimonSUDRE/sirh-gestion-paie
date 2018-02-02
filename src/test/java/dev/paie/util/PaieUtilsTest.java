@@ -8,10 +8,8 @@ import java.math.BigDecimal;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-@Scope("test")
 public class PaieUtilsTest {
 
 	private ClassPathXmlApplicationContext context;

@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,7 +18,6 @@ import dev.paie.entite.Grade;
 
 @ContextConfiguration(classes = { GradeServiceJdbcTemplate.class, JeuxDeDonneesConfig.class, DataSourceMySQLConfig.class })
 @RunWith(SpringRunner.class)
-@Scope("test")
 public class GradeServiceJdbcTemplateTest {
 
 	@Autowired
