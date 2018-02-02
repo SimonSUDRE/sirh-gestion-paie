@@ -33,8 +33,6 @@ public class GradeServiceJdbcTemplateTest {
 	public void test_sauvegarder_lister_mettre_a_jour() {
 		nouveauGrade.setId(1);
 		nouveauGrade.setCode("CODE1");
-
-		gradeService.supprimer(nouveauGrade);
 		
 		// sauvegarder un nouveau grade
 		gradeService.sauvegarder(nouveauGrade);

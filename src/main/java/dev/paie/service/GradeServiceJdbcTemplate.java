@@ -25,7 +25,7 @@ public class GradeServiceJdbcTemplate implements GradeService {
 
 	@Override
 	public void sauvegarder(Grade nouveauGrade) {
-		String sqlInsert = "INSERT INTO grade(CODE, NBHEURESBASE, TAUXBASE) VALUES(?, ?, ?)";
+		String sqlInsert = "INSERT INTO Grade(CODE, NBHEURESBASE, TAUXBASE) VALUES(?, ?, ?)";
 		jdbcTemplate.update(sqlInsert, 
 				nouveauGrade.getCode(), 
 				nouveauGrade.getNbHeuresBase().toString(),
@@ -34,7 +34,7 @@ public class GradeServiceJdbcTemplate implements GradeService {
 
 	@Override
 	public void mettreAJour(Grade grade) {
-		String sqlUpdate = "UPDATE grade SET CODE = ?, NBHEURESBASE = ?, TAUXBASE = ? WHERE ID = ?";
+		String sqlUpdate = "UPDATE Grade SET CODE = ?, NBHEURESBASE = ?, TAUXBASE = ? WHERE ID = ?";
 		jdbcTemplate.update(sqlUpdate,  
 				grade.getCode(), 
 				grade.getNbHeuresBase().toString(),
@@ -44,7 +44,7 @@ public class GradeServiceJdbcTemplate implements GradeService {
 	
 	@Override
 	public void supprimer(Grade grade) {
-		String sqlDelete = "DELETE FROM grade WHERE ID = ?";
+		String sqlDelete = "DELETE FROM Grade WHERE ID = ?";
 		jdbcTemplate.update(sqlDelete, grade.getId());
 	}
 
@@ -58,7 +58,7 @@ public class GradeServiceJdbcTemplate implements GradeService {
 			g.setTauxBase(rs.getBigDecimal("TAUXBASE"));
 			return g;
 		};
-		String sqlSelect = "SELECT * FROM grade";
+		String sqlSelect = "SELECT * FROM Grade";
 		return jdbcTemplate.query(sqlSelect, mapperGrade);
 	}
 }
