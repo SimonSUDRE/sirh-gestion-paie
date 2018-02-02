@@ -24,6 +24,14 @@ public class Avantage {
 	@Column(precision = 10, scale = 2)
 	private BigDecimal montant;
 
+	public Avantage() {}
+	
+	public Avantage(String code, String nom, BigDecimal montant) {
+		this.code = code;
+		this.nom = nom;
+		this.montant = montant;
+	}
+
 	public String getCode() {
 		return code;
 	}

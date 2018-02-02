@@ -15,11 +15,18 @@ public class Periode {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column
+	//@Column
 	private LocalDate dateDebut;
 
-	@Column
+	//@Column
 	private LocalDate dateFin;
+	
+	public Periode() {}
+	
+	public Periode(LocalDate dateDebut, LocalDate dateFin) {
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+	}
 
 	public LocalDate getDateDebut() {
 		return dateDebut;

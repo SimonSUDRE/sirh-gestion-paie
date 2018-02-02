@@ -30,6 +30,16 @@ public class RemunerationEmploye {
 	@JoinColumn(name="Idgrade")
 	private Grade grade;
 
+	public RemunerationEmploye() {}
+	
+	public RemunerationEmploye(String matricule, Entreprise entreprise,
+			ProfilRemuneration profilRemuneration, Grade grade) {
+		this.matricule = matricule;
+		this.entreprise = entreprise;
+		this.profilRemuneration = profilRemuneration;
+		this.grade = grade;
+	}
+
 	public String getMatricule() {
 		return matricule;
 	}

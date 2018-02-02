@@ -1,5 +1,7 @@
 package dev.paie.config;
 
+import java.util.Properties;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -23,14 +25,13 @@ public class JpaConfig {
 		return txManager;
 	}
 
-	// Cette configuration nécessite une source de données configurée.
+	// Cette configuration ne cessite une source de donne es configure e.
 	// Elle s'utilise donc en association avec un autre fichier de configuration
-	// définissant un bean DataSource.
+	// d e finissant un bean DataSource.
 	@Bean
 	@Autowired
 	public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setGenerateDdl(true);
 		// activer les logs SQL
 		vendorAdapter.setShowSql(true);
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
@@ -38,6 +39,9 @@ public class JpaConfig {
 		// alternative au persistence.xml
 		factory.setPackagesToScan("dev.paie.entite");
 		factory.setDataSource(dataSource);
+		Properties jpaProperties = new Properties();
+		jpaProperties.setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
+		factory.setJpaProperties(jpaProperties);
 		factory.afterPropertiesSet();
 		return factory.getObject();
 	}

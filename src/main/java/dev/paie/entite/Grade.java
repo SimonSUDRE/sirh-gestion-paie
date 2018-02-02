@@ -24,6 +24,14 @@ public class Grade {
 	@Column(precision = 10, scale = 4)
 	private BigDecimal tauxBase;
 
+	public Grade() {}
+	
+	public Grade(String code, BigDecimal nbHeuresBase, BigDecimal tauxBase) {
+		this.code = code;
+		this.nbHeuresBase = nbHeuresBase;
+		this.tauxBase = tauxBase;
+	}
+
 	public String getCode() {
 		return code;
 	}

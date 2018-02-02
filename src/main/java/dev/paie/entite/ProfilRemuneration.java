@@ -42,8 +42,15 @@ public class ProfilRemuneration {
 		inverseJoinColumns= @JoinColumn(name="IdAvantage", referencedColumnName="ID")
 	)
 	private List<Avantage> avantages;
-
+	
 	public ProfilRemuneration() {
+		this.avantages = new ArrayList<>();
+		this.cotisationsNonImposables = new ArrayList<>();
+		this.cotisationsImposables = new ArrayList<>();
+	}
+	
+	public ProfilRemuneration(String code) {
+		this.code = code;
 		this.avantages = new ArrayList<>();
 		this.cotisationsNonImposables = new ArrayList<>();
 		this.cotisationsImposables = new ArrayList<>();

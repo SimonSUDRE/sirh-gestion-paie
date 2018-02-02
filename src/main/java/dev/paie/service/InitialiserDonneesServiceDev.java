@@ -1,0 +1,52 @@
+package dev.paie.service;
+
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Map;
+import java.util.stream.IntStream;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.h2.util.TempFileDeleter;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import dev.paie.config.DonneesConfig;
+import dev.paie.entite.Cotisation;
+import dev.paie.entite.Entreprise;
+import dev.paie.entite.Grade;
+import dev.paie.entite.Periode;
+import dev.paie.entite.ProfilRemuneration;
+
+@Service
+@Transactional
+public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
+
+	@PersistenceContext
+	private EntityManager em;
+
+	@Override
+	public void initialiser() {
+		AnnotationConfigApplicationContext contextData = new AnnotationConfigApplicationContext(DonneesConfig.class);
+
+		Map<String, Cotisation> cotisations = contextData.getBeansOfType(Cotisation.class);
+		Map<String, Entreprise> entreprises = contextData.getBeansOfType(Entreprise.class);
+		Map<String, Grade> grades = contextData.getBeansOfType(Grade.class);
+		Map<String, ProfilRemuneration> profils = contextData.getBeansOfType(ProfilRemuneration.class);
+
+		IntStream.rangeClosed(1, 12).forEach(month -> {
+			Periode p = new Periode(LocalDate.of(2017, month, 1),
+					LocalDate.of(2017, month, 1).with(TemporalAdjusters.lastDayOfMonth()));
+			em.persist(p);
+		});
+		cotisations.forEach((key, value) -> em.persist(value));
+		entreprises.forEach((key, value) -> em.persist(value));
+		grades.forEach((key, value) -> em.persist(value));
+		profils.forEach((key, value) -> em.persist(value));
+
+		contextData.close();
+	}
+
+}
