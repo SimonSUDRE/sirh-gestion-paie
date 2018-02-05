@@ -1,14 +1,12 @@
 package dev.paie.service;
 
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
+import java.time.Year;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.h2.util.TempFileDeleter;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,9 +34,9 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 		Map<String, Grade> grades = contextData.getBeansOfType(Grade.class);
 		Map<String, ProfilRemuneration> profils = contextData.getBeansOfType(ProfilRemuneration.class);
 
-		IntStream.rangeClosed(1, 12).forEach(month -> {
-			Periode p = new Periode(LocalDate.of(2017, month, 1),
-					LocalDate.of(2017, month, 1).with(TemporalAdjusters.lastDayOfMonth()));
+		IntStream.rangeClosed(1, 12).forEach(i -> {
+			Periode p = new Periode(Year.now().atMonth(i).atDay(i),
+					Year.now().atMonth(i).atEndOfMonth());
 			em.persist(p);
 		});
 		cotisations.forEach((key, value) -> em.persist(value));

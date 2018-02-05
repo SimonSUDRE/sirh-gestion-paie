@@ -15,10 +15,10 @@ public class Periode {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	//@Column
+	@Column
 	private LocalDate dateDebut;
 
-	//@Column
+	@Column
 	private LocalDate dateFin;
 	
 	public Periode() {}
