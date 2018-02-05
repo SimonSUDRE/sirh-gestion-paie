@@ -8,4 +8,5 @@ import dev.paie.entite.ResultatCalculRemuneration;
 public interface CalculerRemunerationService {
 	ResultatCalculRemuneration calculer(BulletinSalaire	bulletin);
 	Map<BulletinSalaire, ResultatCalculRemuneration> mapped();
+	ResultatCalculRemuneration resultat(Integer id);
 }

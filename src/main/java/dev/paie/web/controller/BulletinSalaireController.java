@@ -3,6 +3,7 @@ package dev.paie.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,6 +55,15 @@ public class BulletinSalaireController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/listerBulletins");
 		mv.addObject("listeBulletin", calculremService.mapped());
+		return mv;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path = "/visualiser/{id}")
+	public ModelAndView visualiserEmploye(@PathVariable Integer id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bulletins/visualiserBulletin");
+		mv.addObject("bulletin", bulletinSalaireRepo.findOne(id));
+		mv.addObject("calculBulletin", calculremService.resultat(id));
 		return mv;
 	}
 }

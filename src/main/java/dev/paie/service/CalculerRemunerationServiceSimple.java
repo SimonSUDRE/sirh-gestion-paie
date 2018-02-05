@@ -75,4 +75,11 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 		}
 		return map;
 	}
+	
+	@Override
+	@Transactional
+	public ResultatCalculRemuneration resultat(Integer id) {
+		BulletinSalaire b = bulletinSalaireRepo.findOne(id);
+		return this.calculer(b);
+	}
 }
