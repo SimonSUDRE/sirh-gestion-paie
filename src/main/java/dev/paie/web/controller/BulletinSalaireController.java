@@ -29,6 +29,11 @@ public class BulletinSalaireController {
 	@Autowired
 	private RemunerationEmployeRepository remEmplRepo;
 	
+	@ModelAttribute("bulletinSalaire")
+	public BulletinSalaire getBulletinSalaire() {
+		return new BulletinSalaire();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeForm() {
 		ModelAndView mv = new ModelAndView();
@@ -38,19 +43,17 @@ public class BulletinSalaireController {
 		return mv;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerEmploye(@ModelAttribute("bulletinSalaire") BulletinSalaire bulletinSalaire) {
-		ModelAndView mv = new ModelAndView();
 		bulletinSalaireRepo.save(bulletinSalaire);
-		return mv;
+		return listerEmploye();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
 	public ModelAndView listerEmploye() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/listerBulletins");
-		mv.addObject("listeBulletin", bulletinSalaireRepo.findAll());
-		mv.addObject("calculBulletin", calculremService);
+		mv.addObject("listeBulletin", calculremService.mapped());
 		return mv;
 	}
 }

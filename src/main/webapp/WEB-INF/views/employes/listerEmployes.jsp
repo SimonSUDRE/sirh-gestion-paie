@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../includeHeader.jsp"%>
-	<title>Gestion des employés</title>
+<title>Gestion des employés</title>
 </head>
 <body>
 	<nav>
@@ -21,7 +21,7 @@
 					class="btn btn-primary btn-default mt-2 mt-sm-0 col-sm-12 col-md-5 col-lg-4 offset-lg-9 offset-md-9">
 					Ajouter un employe</a>
 			</div>
-			<br/>
+			<br>
 			<div class="container offset-lg-2">
 				<table class="table table-sm table-striped">
 					<thead class="thead-dark">
@@ -33,10 +33,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+						<c:forEach items="${ listeEmploye }" var="employe">
+							<tr>
+								<td>${ employe.matricule }</td>
+								<td>${ employe.entreprise.denomination }</td>
+								<td>${ employe.profilRemuneration.code }</td>
+								<td>${ employe.grade.code }</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 		</article>
 	</section>
-<%@ include file="../includeFooter.jsp"%>
+	<%@ include file="../includeFooter.jsp"%>

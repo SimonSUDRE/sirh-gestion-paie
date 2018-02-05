@@ -33,6 +33,11 @@ public class RemunerationEmployeController {
 	@Autowired
 	private PaieUtils pu;
 	
+	@ModelAttribute("remunerationEmploye")
+	public RemunerationEmploye getRemunerationEmploye() {
+		return new RemunerationEmploye();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeForm() {
 		ModelAndView mv = new ModelAndView();
@@ -44,11 +49,10 @@ public class RemunerationEmployeController {
 		return mv;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerEmploye(@ModelAttribute("remunerationEmploye") RemunerationEmploye remunerationEmploye) {
-		ModelAndView mv = new ModelAndView();
 		remEmplRepo.save(remunerationEmploye);
-		return mv;
+		return listerEmploye();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")

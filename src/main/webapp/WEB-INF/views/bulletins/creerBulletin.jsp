@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ include file="../includeHeader.jsp"%>
-	<title>Gestion des bulletins</title>
+<title>Gestion des bulletins</title>
 </head>
 <body>
 	<nav>
@@ -19,47 +19,53 @@
 			</div>
 			<div class="container offset-lg-2">
 				<form:form class="needs-validation" method="post"
-					action='<c:url value="/mvc/bulletins/lister" />' modelAttribute="bulletinSalaire" novalidate>
+					modelAttribute="bulletinSalaire" novalidate="novalidate">
 					<div class="form-group row">
-						<label for="colFormLabelLg"
-							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Entreprise</label>
+						<form:label path="periode"
+							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Période</form:label>
 						<div class="col-sm-12 col-md-7">
-							<form:select path="periode" name="periode" class="custom-select" required>
-								<c:forEach items="${ listePeriode }" var="periodes">
-									<form:option value="${ periodes.id }">${ periodes.dateDebut.toString() } - ${ periodes.dateFin.toString() }</form:option>
+							<form:select path="periode.id" class="custom-select"
+								required="required" name="periode">
+								<c:forEach items="${ listePeriode }" var="unePeriode">
+									<form:option value="${ unePeriode.id }">
+										<c:out
+											value="${ unePeriode.dateDebut } - ${ unePeriode.dateFin }" />
+									</form:option>
 								</c:forEach>
 							</form:select>
 						</div>
 					</div>
-	
+
 					<div class="form-group row">
-						<label for="colFormLabelLg"
-							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Profil</label>
+						<form:label path="remunerationEmploye"
+							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Matricule</form:label>
 						<div class="col-sm-12 col-md-7">
-							<form:select path="remunerationEmploye" name="matricule" class="custom-select" required>
-								<c:forEach items="${ listeEmploye }" var="employes">
-									<form:option value="${ employes.id }">${ employes.matricule }</form:option>
-								</c:forEach>
+							<form:select path="remunerationEmploye.id" name="remunerationEmploye"
+								class="custom-select" required="required">
+								<form:options items="${ listeEmploye }" itemLabel="matricule"
+									itemValue="id" />
 							</form:select>
 						</div>
 					</div>
-					
+
 					<div class="form-group row">
-						<label for="colFormLabelLg"
-							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Prime exceptionnelle</label>
+						<form:label path="primeExceptionnelle"
+							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Prime exceptionnelle</form:label>
 						<div class="col-sm-12 col-md-7">
-							<form:input path="primeExceptionnelle" type="number" class="form-control form-control-lg"
-								id="colFormLabelLg" name="prime" min="0" step="0.01" value="0" required />
-							<div class="invalid-feedback">La Prime exceptionnelle est obligatoire.</div>
+							<form:input path="primeExceptionnelle" type="number"
+								class="form-control form-control-lg" id="colFormLabelLg"
+								name="prime" min="0" step="0.01" value="0" required="required" />
+							<div class="invalid-feedback">La Prime exceptionnelle est
+								obligatoire.</div>
 						</div>
 					</div>
-					
+
 					<div class="form-row form">
 						<form:button type="submit" id="ajouter" name="ajouter"
-							class="btn btn-default mt-2 mt-sm-0 offset-8 col-lg-1">Ajouter</button>
+							class="btn btn-default mt-2 mt-sm-0 offset-8 col-lg-1">Ajouter</form:button>
 					</div>
 				</form:form>
 			</div>
 		</article>
 	</section>
-<%@ include file="../includeFooter.jsp"%>
+	<%@ include file="../includeFooter.jsp"%>

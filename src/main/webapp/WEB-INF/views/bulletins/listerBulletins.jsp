@@ -35,7 +35,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+						<c:forEach items="${ listeBulletin }" var="bulletin">						
+							<tr>
+								<td>${ bulletin.key.periode.dateDebut } - ${ bulletin.key.periode.dateFin }</td>
+								<td>${ bulletin.key.remunerationEmploye.matricule }</td>
+								<td>${ bulletin.value.salaireBrut }</td>
+								<td>${ bulletin.value.netImposable }</td>
+								<td>${ bulletin.value.netAPayer }</td>
+								<td><a href="/mvc/bulletin/visualiser/${ bulletin.key.id }">Visualiser</a></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
