@@ -1,6 +1,7 @@
 package dev.paie.entite;
 
 public class ResultatCalculRemuneration {
+	
 	private String salaireDeBase;
 	private String salaireBrut;
 	private String totalRetenueSalarial;

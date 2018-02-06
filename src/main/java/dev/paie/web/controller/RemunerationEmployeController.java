@@ -1,5 +1,9 @@
 package dev.paie.web.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +37,15 @@ public class RemunerationEmployeController {
 	@Autowired
 	private PaieUtils pu;
 	
+	private Map<String, Boolean> isFieldsOK = new HashMap<>();
+	
+	public RemunerationEmployeController() {
+		isFieldsOK.put("matriculeOk", true);
+		isFieldsOK.put("entrepriseOk", true); 
+		isFieldsOK.put("profilOk", true); 
+		isFieldsOK.put("gradeOk", true);
+	}
+	
 	@ModelAttribute("remunerationEmploye")
 	public RemunerationEmploye getRemunerationEmploye() {
 		return new RemunerationEmploye();
@@ -46,11 +59,23 @@ public class RemunerationEmployeController {
 		mv.addObject("listeProfils", profilRemRepo.findAll());
 		mv.addObject("listeGrades", gradeRepo.findAll());
 		mv.addObject("pu", pu);
+		mv.addAllObjects(isFieldsOK);
 		return mv;
+	}
+	
+	private Map<String, Boolean> formValidation(RemunerationEmploye remEmpl) {
+		isFieldsOK.replace("matriculeOk", Pattern.matches("M[0-9]+", remEmpl.getMatricule()));
+		isFieldsOK.replace("entrepriseOk", remEmpl.getEntreprise() != null);
+		isFieldsOK.replace("profilOk", remEmpl.getProfilRemuneration() != null);
+		isFieldsOK.replace("gradeOk", remEmpl.getGrade() != null);
+		return isFieldsOK;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerEmploye(@ModelAttribute("remunerationEmploye") RemunerationEmploye remunerationEmploye) {
+		if(formValidation(remunerationEmploye).containsValue(false)) {
+			return creerEmployeForm();
+		}
 		remEmplRepo.save(remunerationEmploye);
 		return listerEmploye();
 	}

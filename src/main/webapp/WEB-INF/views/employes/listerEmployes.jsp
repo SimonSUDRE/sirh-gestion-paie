@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../includeHeader.jsp"%>
-<title>Gestion des employés</title>
+<title>Gestion des employ&#xE9;s</title>
 </head>
 <body>
 	<nav>
 		<ul class="nav nav-pills border-bottom">
 			<li class="nav-item "><a class="nav-link active"
-				href='<c:url value="/mvc/employes/lister" />'>Employés</a></li>
+				href='<c:url value="/mvc/employes/lister" />'>Employ&#xE9;s</a></li>
 			<li class="nav-item"><a class="nav-link"
 				href='<c:url value="/mvc/bulletins/lister" />'>Bulletins</a></li>
 		</ul>
@@ -14,7 +14,7 @@
 	<section>
 		<article>
 			<div class="container">
-				<h1>liste des employés</h1>
+				<h1>liste des employ&#xE9;s</h1>
 			</div>
 			<div class="container">
 				<a href='<c:url value="/mvc/employes/creer" />'
