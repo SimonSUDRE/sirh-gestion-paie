@@ -118,6 +118,14 @@
 							</tr>
 						</c:forEach>
 						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
 							<td>Total Retenue</td>
 							<td></td>
 							<td></td>
