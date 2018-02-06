@@ -6,17 +6,17 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.repository.PeriodeRepository;
 import dev.paie.repository.RemunerationEmployeRepository;
-import dev.paie.service.BulletinSalaireService;
 import dev.paie.service.CalculerRemunerationService;
 import dev.paie.util.PaieUtils;
 
@@ -35,9 +35,6 @@ public class BulletinSalaireController {
 	
 	@Autowired
 	private RemunerationEmployeRepository remEmplRepo;
-	
-	@Autowired
-	private BulletinSalaireService bulletinService;
 	
 	@Autowired
 	private PaieUtils pu;
@@ -89,14 +86,13 @@ public class BulletinSalaireController {
 		return mv;
 	}
 	
+	@Transactional
 	@RequestMapping(method = RequestMethod.GET, path = "/visualiser/{id}")
-	public ModelAndView visualiserBulletin(@RequestParam Integer id) {
+	public ModelAndView visualiserBulletin(@PathVariable String id) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/visualiserBulletin");
-		mv.addObject("bulletin", bulletinSalaireRepo.findOne(id));
-		mv.addObject("calculBulletin", calculremService.resultat(id));
-		bulletinService.getForVisualiser(id);
-		mv.addObject("infoBulletin", bulletinService);
+		mv.addObject("calculBulletin", calculremService.resultat(Integer.parseInt(id)));
+		mv.addObject("bulletin", bulletinSalaireRepo.findOne(Integer.parseInt(id)));
 		mv.addObject("pu", pu);
 		return mv;
 	}

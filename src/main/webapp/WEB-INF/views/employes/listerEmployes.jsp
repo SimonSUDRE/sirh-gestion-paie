@@ -19,7 +19,7 @@
 			<div class="container">
 				<a href='<c:url value="/mvc/employes/creer" />'
 					class="btn btn-primary btn-default mt-2 mt-sm-0 col-sm-12 col-md-5 col-lg-4 offset-lg-9 offset-md-9">
-					Ajouter un employe</a>
+					Ajouter un employ&#xE9;</a>
 			</div>
 			<br>
 			<div class="container offset-lg-2">

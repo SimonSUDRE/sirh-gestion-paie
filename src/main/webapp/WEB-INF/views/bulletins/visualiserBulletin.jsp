@@ -16,22 +16,22 @@
 			<div class="container">
 				<h1>Bulletin de salaire</h1>
 			</div>
-			<div class="container offset-lg-2">
-				<div class="offset-9 col-3">
+			<div class="container">
+				<div class="offset-8 col">
 					<b>P&#xE9;riode</b><br/>
 					<span>Du ${ bulletin.periode.dateDebut } au ${ bulletin.periode.dateFin }</span>
 				</div>
-				<div class="col-3">
+				<div class="col">
 					<b>Entreprise</b><br/>
-					${ infoBulletin.entreprise.denomination }<br/>
-					<span>SIRET : </span>${ infoBulletin.entreprise.siret }
+					${ bulletin.remunerationEmploye.entreprise.denomination }<br/>
+					<span>SIRET : </span>${ bulletin.remunerationEmploye.entreprise.siret }
 				</div>
-				<div class="offset-6 col-3">
+				<div class="offset-8 col">
 					<b>Matricule</b> ${ bulletin.remunerationEmploye.matricule }
 				</div>
 				<br/>
+				<b>Salaire</b>
 				<table class="table table-sm table-striped">
-					<caption class="col-3"><b>Salaire</b></caption>
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Rubriques</th>
@@ -45,29 +45,41 @@
 					<tbody>
 						<tr>
 							<td>Salaire de Base</td>
-							<td>${ infoBulletin.grade.nbHeuresBase }</td>
-							<td>${ infoBulletin.grade.tauxBase }</td>
+							<td>${  bulletin.remunerationEmploye.grade.nbHeuresBase }</td>
+							<td>${  bulletin.remunerationEmploye.grade.tauxBase }</td>
 							<td>${ calculBulletin.salaireDeBase }</td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>Prime Except.</td>
 							<td></td>
 							<td></td>
 							<td>${ bulletin.primeExceptionnelle }</td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>Salaire Brut</td>
 							<td></td>
 							<td></td>
 							<td>${ calculBulletin.salaireBrut }</td>
+							<td></td>
+							<td></td>
 						</tr>
 					</tbody>
 				</table>
 				<br/>
+				<b>Cotisations</b>
 				<table class="table table-sm table-striped">
-					<caption class="col-3"><b>Cotisations</b></caption>
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Rubriques</th>
@@ -79,7 +91,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${ infoBulletin.profil.cotisationsNonImposables }" var="cotNonImpo">
+						<c:forEach items="${  bulletin.remunerationEmploye.profilRemuneration.cotisationsNonImposables }" var="cotNonImpo">
 							<tr>
 								<td>${ cotNonImpo.code } ${ cotNonImpo.libelle }</td>
 								<td>${ calculBulletin.salaireBrut }</td>
@@ -90,7 +102,7 @@
 								</td>
 								<td>
 									<c:if test="${ not empty cotNonImpo.tauxSalarial }">
-										${ cotNonImpo.tauxSalarial.multiply(calculBulletin.salaireBrut) }
+										${ pu.formaterBigDecimal(cotNonImpo.tauxSalarial.multiply(calculBulletin.salaireBrut)) }
 									</c:if>
 								</td>
 								<td>
@@ -100,7 +112,7 @@
 								</td>
 								<td>
 									<c:if test="${ not empty cotNonImpo.tauxPatronal }">
-										${ cotNonImpo.tauxPatronal.multiply(calculBulletin.salaireBrut) }
+										${ pu.formaterBigDecimal(cotNonImpo.tauxPatronal.multiply(calculBulletin.salaireBrut)) }
 									</c:if>
 								</td>
 							</tr>
@@ -116,8 +128,8 @@
 					</tbody>
 				</table>
 				<br/>
+				<b>Net Imposable : ${ calculBulletin.netImposable }</b>
 				<table class="table table-sm table-striped">
-					<caption class="col-3"><b>Net Imposable : ${ calculBulletin.netImposable }</b></caption>
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Rubriques</th>
@@ -129,7 +141,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${ infoBulletin.profil.cotisationsImposables }" var="cotImpo">
+						<c:forEach items="${  bulletin.remunerationEmploye.profilRemuneration.cotisationsImposables }" var="cotImpo">
 							<tr>
 								<td>${ cotImpo.code } ${ cotImpo.libelle }</td>
 								<td>${ calculBulletin.salaireBrut }</td>
@@ -140,14 +152,24 @@
 								</td>
 								<td>
 									<c:if test="${ not empty cotImpo.tauxSalarial }">
-										${ cotImpo.tauxSalarial.multiply(calculBulletin.salaireBrut) }
+										${ pu.formaterBigDecimal(cotImpo.tauxSalarial.multiply(calculBulletin.salaireBrut)) }
 									</c:if>	
+								</td>
+								<td>
+									<c:if test="${ not empty cotImpo.tauxPatronal }">
+										${ cotNonImpo.tauxPatronal }
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ not empty cotImpo.tauxPatronal }">
+										${ pu.formaterBigDecimal(cotNonImpo.tauxPatronal.multiply(calculBulletin.salaireBrut)) }
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-				<b class="col-4 offset-8">NET A PAYER : ${ calculBulletin.netAPayer }</b>
+				<b class="col offset-8">NET A PAYER : ${ calculBulletin.netAPayer }</b>
 			</div>
 		</article>
 	</section>
