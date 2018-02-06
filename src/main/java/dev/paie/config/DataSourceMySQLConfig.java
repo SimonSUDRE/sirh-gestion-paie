@@ -11,7 +11,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 @Configuration
 public class DataSourceMySQLConfig {
 	
-	
+	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -21,7 +21,7 @@ public class DataSourceMySQLConfig {
 		return dataSource;
 	}
 
-	@Bean
+	
 	public DataSource dataSourceH2() {
 		return new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)

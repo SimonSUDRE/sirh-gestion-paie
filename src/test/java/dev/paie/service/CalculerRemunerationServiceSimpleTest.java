@@ -10,12 +10,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import dev.paie.config.JeuxDeDonneesConfig;
+import dev.paie.config.ServicesConfig;
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.ResultatCalculRemuneration;
 import dev.paie.util.PaieUtils;
 
 //Sélection des classes de configuration Spring à utiliser lors du test
-@ContextConfiguration(classes = { CalculerRemunerationServiceSimple.class, PaieUtils.class, JeuxDeDonneesConfig.class })
+@ContextConfiguration(classes = { ServicesConfig.class, PaieUtils.class, JeuxDeDonneesConfig.class })
 // Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
 // test
 @RunWith(SpringRunner.class)
@@ -23,11 +24,11 @@ public class CalculerRemunerationServiceSimpleTest {
 
 	@Autowired
 	private CalculerRemunerationService remunerationService;
-	
+
 	@Autowired
 	@Qualifier("bulletin1")
 	private BulletinSalaire bulletin1;
-	
+
 	@Test
 	public void test_calculer() {
 		ResultatCalculRemuneration resultat = remunerationService.calculer(bulletin1);
