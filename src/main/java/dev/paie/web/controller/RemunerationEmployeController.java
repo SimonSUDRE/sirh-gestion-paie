@@ -51,6 +51,11 @@ public class RemunerationEmployeController {
 		return new RemunerationEmploye();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView employe() {
+		return listerEmploye();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeForm() {
 		ModelAndView mv = new ModelAndView();

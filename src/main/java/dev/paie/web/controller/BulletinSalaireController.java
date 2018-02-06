@@ -47,6 +47,11 @@ public class BulletinSalaireController {
 		isFieldsOK.put("primeOk", true);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView bulletin() {
+		return listerBulletin();
+	}
+	
 	@ModelAttribute("bulletinSalaire")
 	public BulletinSalaire getBulletinSalaire() {
 		return new BulletinSalaire();
