@@ -12,12 +12,12 @@
 				href='<c:url value="/mvc/bulletins/lister" />'>Bulletins</a></li>
 		</ul>
 	</nav>
-	<section>
+	<section class="container">
 		<article>
-			<div class="container">
+			<div>
 				<h1>Ajouter un Employ&#xE9;</h1>
 			</div>
-			<div class="container offset-lg-2">
+			<div>
 				<form:form class="needs-validation" method="post"
 					modelAttribute="remunerationEmploye" novalidate="novalidate">
 					<div class="form-group row">
@@ -29,7 +29,7 @@
 									<form:input path="matricule" type="text" id="colFormLabelLg"
 										name="matricule" required="required"
 										class="form-control form-control-lg is-invalid" />
-									<span class="text-danger">Le Matricule est obligatoire et doit suivre le model M accompagner d'au moins un chiffre.</span>
+									<span class="text-danger">Le Matricule est obligatoire et doit suivre le model au moins une lettre Majuscule et suivi d'un chiffre</span>
 								</c:when>
 								<c:otherwise>
 									<form:input path="matricule" type="text" id="colFormLabelLg"

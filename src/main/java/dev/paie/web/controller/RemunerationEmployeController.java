@@ -64,7 +64,7 @@ public class RemunerationEmployeController {
 	}
 	
 	private Map<String, Boolean> formValidation(RemunerationEmploye remEmpl) {
-		isFieldsOK.replace("matriculeOk", Pattern.matches("[A-Z][0-9]+", remEmpl.getMatricule()));
+		isFieldsOK.replace("matriculeOk", Pattern.matches("[A-Z]+[0-9]+", remEmpl.getMatricule()));
 		isFieldsOK.replace("entrepriseOk", remEmpl.getEntreprise() != null);
 		isFieldsOK.replace("profilOk", remEmpl.getProfilRemuneration() != null);
 		isFieldsOK.replace("gradeOk", remEmpl.getGrade() != null);

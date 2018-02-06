@@ -11,12 +11,12 @@
 				href='<c:url value="/mvc/bulletins/lister" />'>Bulletins</a></li>
 		</ul>
 	</nav>
-	<section>
+	<section class="container">
 		<article>
-			<div class="container">
+			<div >
 				<h1>Bulletin de salaire</h1>
 			</div>
-			<div class="container">
+			<div>
 				<div class="offset-8 col">
 					<b>P&#xE9;riode</b><br/>
 					<span>Du ${ bulletin.periode.dateDebut } au ${ bulletin.periode.dateFin }</span>

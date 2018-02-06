@@ -12,12 +12,12 @@
 				href='<c:url value="/mvc/bulletins/lister" />'>Bulletins</a></li>
 		</ul>
 	</nav>
-	<section>
+	<section class="container">
 		<article>
-			<div class="container">
+			<div>
 				<h1>Cr&#xE9;er un Bulletin de Salaire</h1>
 			</div>
-			<div class="container offset-lg-2">
+			<div>
 				<form:form class="needs-validation" method="post"
 					modelAttribute="bulletinSalaire" novalidate="novalidate">
 					<div class="form-group row">

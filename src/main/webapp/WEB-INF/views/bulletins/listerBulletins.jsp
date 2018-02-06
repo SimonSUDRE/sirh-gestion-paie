@@ -11,18 +11,18 @@
 				href='<c:url value="/mvc/bulletins/lister" />'>Bulletins</a></li>
 		</ul>
 	</nav>
-	<section>
+	<section class="container">
 		<article>
-			<div class="container">
+			<div >
 				<h1>Liste des bulletins</h1>
 			</div>
-			<div class="container">
+			<div>
 				<a href='<c:url value="/mvc/bulletins/creer" />'
 					class="btn btn-primary btn-default mt-2 mt-sm-0 col-sm-12 col-md-5 col-lg-4 offset-lg-9 offset-md-9">
 					Cr&#xE9;er un nouveau bulletin</a>
 			</div>
 			<br/>
-			<div class="container offset-lg-2">
+			<div>
 				<table class="table table-sm table-striped">
 					<thead class="thead-dark">
 						<tr>
