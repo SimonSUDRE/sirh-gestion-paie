@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="user1" class="dev.paie.entite.Utilisateur">
+		<property name="nomUtilisateur" value="admin" />
+		<property name="motDePasse" value="admin" />
+		<property name="estActif" value="true" />
+		<property name="role" value="ROLE_ADMINISTRATEUR" />
+	</bean>
+	
+	<bean id="user2" class="dev.paie.entite.Utilisateur">
+		<property name="nomUtilisateur" value="user" />
+		<property name="motDePasse" value="user" />
+		<property name="estActif" value="true" />
+		<property name="role" value="ROLE_UTILISATEUR" />
+	</bean>
+
+</beans>

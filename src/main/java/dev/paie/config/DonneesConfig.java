@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ImportResource;
 	"classpath:entreprises.xml",
 	"classpath:grades.xml",
 	"classpath:profils-remuneration.xml",
+	"classpath:utilisateurs.xml"
 	})
 public class DonneesConfig {
 

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +54,7 @@ public class RemunerationEmployeController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView employe() {
-		return listerEmploye();
+		return new ModelAndView("redirect:/mvc/employes/lister");
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
@@ -79,10 +80,21 @@ public class RemunerationEmployeController {
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerEmploye(@ModelAttribute("remunerationEmploye") RemunerationEmploye remunerationEmploye) {
 		if(formValidation(remunerationEmploye).containsValue(false)) {
-			return creerEmployeForm();
+			ModelAndView mv = creerEmployeForm();
+			mv.setStatus(HttpStatus.BAD_REQUEST);
+			return mv;
 		}
-		remEmplRepo.save(remunerationEmploye);
-		return listerEmploye();
+		try {
+			remEmplRepo.save(remunerationEmploye);
+			return listerEmploye();
+		} catch (javax.persistence.PersistenceException e) {
+			isFieldsOK.replace("entrepriseOk", false);
+			isFieldsOK.replace("profilOk", false);
+			isFieldsOK.replace("gradeOk", false);
+			ModelAndView mv = creerEmployeForm();
+			mv.setStatus(HttpStatus.BAD_REQUEST);
+			return mv;
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")

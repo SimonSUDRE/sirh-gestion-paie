@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,21 +41,22 @@ public class BulletinSalaireController {
 	private PaieUtils pu;
 
 	private Map<String, Boolean> isFieldsOK = new HashMap<>();
+	private String[] okFields = {"periodeOk", "remEmplOk", "primeOk"};
 	
 	public BulletinSalaireController() {
-		isFieldsOK.put("periodeOk", true);
-		isFieldsOK.put("remEmplOk", true);
-		isFieldsOK.put("primeOk", true);
-	}
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView bulletin() {
-		return listerBulletin();
+		isFieldsOK.put(okFields[0], true);
+		isFieldsOK.put(okFields[1], true);
+		isFieldsOK.put(okFields[2], true);
 	}
 	
 	@ModelAttribute("bulletinSalaire")
 	public BulletinSalaire getBulletinSalaire() {
 		return new BulletinSalaire();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView bulletin() {
+		return new ModelAndView("redirect:/mvc/bulletins/lister");
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
@@ -68,19 +70,29 @@ public class BulletinSalaireController {
 	}
 	
 	private Map<String, Boolean> formValidation(BulletinSalaire bulletin) {
-		isFieldsOK.replace("periodeOk", bulletin.getPeriode() != null);
-		isFieldsOK.replace("remEmplOk", bulletin.getRemunerationEmploye() != null);
-		isFieldsOK.replace("primeOk", bulletin.getPrimeExceptionnelle().compareTo(BigDecimal.ZERO) >= 0);
+		isFieldsOK.replace(okFields[0], bulletin.getPeriode() != null);
+		isFieldsOK.replace(okFields[1], bulletin.getRemunerationEmploye() != null);
+		isFieldsOK.replace(okFields[2], bulletin.getPrimeExceptionnelle().compareTo(BigDecimal.ZERO) >= 0);
 		return isFieldsOK;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerBulletin(@ModelAttribute("bulletinSalaire") BulletinSalaire bulletinSalaire) {
 		if(formValidation(bulletinSalaire).containsValue(false)) {
-			return creerBulletinForm();
+			ModelAndView mv = creerBulletinForm();
+			mv.setStatus(HttpStatus.BAD_REQUEST);
+			return mv;
 		}
-		bulletinSalaireRepo.save(bulletinSalaire);
-		return listerBulletin();
+		try {
+			bulletinSalaireRepo.save(bulletinSalaire);
+			return listerBulletin();
+		}catch(javax.persistence.PersistenceException e) {
+			isFieldsOK.replace(okFields[0], false);
+			isFieldsOK.replace(okFields[1], false);
+			ModelAndView mv = creerBulletinForm();
+			mv.setStatus(HttpStatus.BAD_REQUEST);
+			return mv;
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
