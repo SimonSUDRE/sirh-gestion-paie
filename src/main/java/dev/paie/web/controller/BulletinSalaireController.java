@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,11 +55,13 @@ public class BulletinSalaireController {
 		return new BulletinSalaire();
 	}
 	
+	@Secured("UTILISATEUR")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView bulletin() {
 		return new ModelAndView("redirect:/mvc/bulletins/lister");
 	}
 	
+	@Secured("ADMINISTRATEUR")
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerBulletinForm() {
 		ModelAndView mv = new ModelAndView();
@@ -76,6 +79,7 @@ public class BulletinSalaireController {
 		return isFieldsOK;
 	}
 	
+	@Secured("ADMINISTRATEUR")
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerBulletin(@ModelAttribute("bulletinSalaire") BulletinSalaire bulletinSalaire) {
 		if(formValidation(bulletinSalaire).containsValue(false)) {
@@ -95,6 +99,7 @@ public class BulletinSalaireController {
 		}
 	}
 	
+	@Secured("UTILISATEUR")
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
 	public ModelAndView listerBulletin() {
 		ModelAndView mv = new ModelAndView();
@@ -103,6 +108,7 @@ public class BulletinSalaireController {
 		return mv;
 	}
 	
+	@Secured("UTILISATEUR")
 	@Transactional
 	@RequestMapping(method = RequestMethod.GET, path = "/visualiser/{id}")
 	public ModelAndView visualiserBulletin(@PathVariable String id) {
